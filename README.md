@@ -1,2 +1,2 @@
 # obj_struct
-A Python module that write complex structures of objects in text files
+A Python module that writes complex structures of objects in file streams
