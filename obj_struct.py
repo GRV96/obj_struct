@@ -20,7 +20,7 @@ def write_obj_struct(struct, output_path):
 	if isinstance(output_path, str):
 		output_path = Path(output_path)
 
-	elif isinstance(output_path, Path):
+	elif not isinstance(output_path, Path):
 		raise TypeError("The given path must be an instance "
 			+ "of str or Pathlib's class Path.")
 
