@@ -19,8 +19,8 @@ def _obj_is_a_dlst(obj):
 def write_obj_struct(struct, w_stream, write_types=False):
 
 	if w_stream.mode not in _STREAM_WRITING_MODES:
-		raise ValueError(
-			"The stream's mode must be \"a\", \"a+\", \"r+\", \"w\", \"w+\".")
+		raise ValueError("The stream's mode must be "
+			+ "\"a\", \"a+\", \"r+\", \"w\" or \"w+\".")
 
 	obj_str_fnc = _obj_and_type_to_str if write_types else str
 
