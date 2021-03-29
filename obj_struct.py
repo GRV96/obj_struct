@@ -67,7 +67,7 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent, obj_str_fnc):
 				_write_obj_struct_rec(value, w_stream, indent, obj_str_fnc)
 
 			else:
-				line += " " + obj_str_fnc(value)
+				line += obj_str_fnc(value)
 				w_stream.write(line + "\n")
 
 	elif isinstance(obj_to_write, set):
