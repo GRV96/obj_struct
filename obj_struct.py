@@ -16,7 +16,7 @@ def _obj_is_a_dlst(obj):
 	return isinstance(obj, _DLST)
 
 
-def write_obj_struct(struct, output_path):
+def write_obj_struct(struct, output_path, write_types=False):
 	if isinstance(output_path, str):
 		output_path = Path(output_path)
 
@@ -26,16 +26,18 @@ def write_obj_struct(struct, output_path):
 
 	w_stream = output_path.open(mode="w")
 
+	obj_str_fnc = _obj_and_type_to_str if write_types else str
+
 	if _obj_is_a_dlst(struct):
 		w_stream.write(str(type(struct)) + "\n")
 		indent = 1
 	else:
 		indent = 0
 
-	_write_obj_struct_rec(struct, w_stream, indent)
+	_write_obj_struct_rec(struct, w_stream, indent, obj_str_fnc)
 
 
-def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
+def _write_obj_struct_rec(obj_to_write, w_stream, indent, obj_str_fnc):
 	tabs = _make_tabs(indent)
 	indent += 1
 
@@ -49,10 +51,10 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
 			if _obj_is_a_dlst(item):
 				line += str(type(item))
 				w_stream.write(line + "\n")
-				_write_obj_struct_rec(item, w_stream, indent)
+				_write_obj_struct_rec(item, w_stream, indent, obj_str_fnc)
 
 			else:
-				line += _obj_and_type_to_str(item)
+				line += obj_str_fnc(item)
 				w_stream.write(line + "\n")
 
 	elif isinstance(obj_to_write, dict):
@@ -62,10 +64,10 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
 			if _obj_is_a_dlst(value):
 				line += str(type(value))
 				w_stream.write(line + "\n")
-				_write_obj_struct_rec(value, w_stream, indent)
+				_write_obj_struct_rec(value, w_stream, indent, obj_str_fnc)
 
 			else:
-				line += " " + _obj_and_type_to_str(value)
+				line += " " + obj_str_fnc(value)
 				w_stream.write(line + "\n")
 
 	elif isinstance(obj_to_write, set):
@@ -75,12 +77,12 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
 			if _obj_is_a_dlst(item):
 				line += str(type(item))
 				w_stream.write(line + "\n")
-				_write_obj_struct_rec(item, w_stream, indent)
+				_write_obj_struct_rec(item, w_stream, indent, obj_str_fnc)
 
 			else:
-				line += _obj_and_type_to_str(item)
+				line += obj_str_fnc(item)
 				w_stream.write(line + "\n")
 
 	else:
-		line = tabs + _obj_and_type_to_str(obj_to_write)
+		line = tabs + obj_str_fnc(obj_to_write)
 		w_stream.write(line + "\n")
