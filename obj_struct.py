@@ -24,7 +24,15 @@ def write_obj_struct(struct, output_path):
 		raise TypeError("The given path must be an instance "
 			+ "of str or Pathlib's class Path.")
 
-	_write_obj_struct_rec(struct, output_path.open(mode="w"))
+	w_stream = output_path.open(mode="w")
+
+	if _obj_is_a_dlst(struct):
+		w_stream.write(str(type(struct)) + "\n")
+		indent = 1
+	else:
+		indent = 0
+
+	_write_obj_struct_rec(struct, w_stream, indent)
 
 
 def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
