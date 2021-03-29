@@ -1,7 +1,7 @@
-from pathlib import Path
-
-
 _DLST = (dict, list, set, tuple)
+
+
+_STREAM_WRITING_MODES = ("a", "a+", "r+", "w", "w+")
 
 
 def _make_tabs(n):
@@ -16,21 +16,18 @@ def _obj_is_a_dlst(obj):
 	return isinstance(obj, _DLST)
 
 
-def write_obj_struct(struct, output_path, write_types=False):
-	if isinstance(output_path, str):
-		output_path = Path(output_path)
+def write_obj_struct(struct, w_stream, write_types=False):
 
-	elif not isinstance(output_path, Path):
-		raise TypeError("The given path must be an instance "
-			+ "of str or Pathlib's class Path.")
-
-	w_stream = output_path.open(mode="w")
+	if w_stream.mode not in _STREAM_WRITING_MODES:
+		raise ValueError(
+			"The stream's mode must be \"a\", \"a+\", \"r+\", \"w\", \"w+\".")
 
 	obj_str_fnc = _obj_and_type_to_str if write_types else str
 
 	if _obj_is_a_dlst(struct):
 		w_stream.write(str(type(struct)) + "\n")
 		indent = 1
+
 	else:
 		indent = 0
 

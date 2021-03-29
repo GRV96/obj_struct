@@ -46,4 +46,6 @@ structure = ( # tuple
 			"fr": "quelque chose"},
 		3.4159])
 
-write_obj_struct(structure, "result.txt")
+output_path = "result.txt"
+with open(output_path, mode="w") as output_stream:
+	write_obj_struct(structure, output_stream)
