@@ -18,7 +18,6 @@ class Ajxo: # "thing" in Esperanto
 			+ repr_arg(self.b) + ")"
 
 
-#structure = "struct"
 structure = ( # tuple
 	Ajxo(None, 2187),
 	11,

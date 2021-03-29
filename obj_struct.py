@@ -49,7 +49,7 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent=0):
 
 	elif isinstance(obj_to_write, dict):
 		for key, value in obj_to_write.items():
-			line = tabs + str(key) + ":"
+			line = tabs + str(key) + ": "
 
 			if _obj_is_a_dlst(value):
 				line += str(type(value))
