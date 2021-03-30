@@ -8,11 +8,17 @@ embedded in one another and other objects.
 _DLST = (dict, list, set, tuple)
 
 
+_LT = (list, tuple)
+
+
 _STREAM_WRITING_MODES = ("a", "a+", "r+", "w", "w+")
 
 
+_TAB = "\t"
+
+
 def _make_tabs(n):
-	return "\t" * n
+	return _TAB * n
 
 
 def _obj_and_type_to_str(obj):
@@ -72,7 +78,7 @@ def _write_obj_struct_rec(obj_to_write, w_stream, indent, obj_str_fnc):
 	tabs = _make_tabs(indent)
 	indent += 1
 
-	if isinstance(obj_to_write, (list, tuple)):
+	if isinstance(obj_to_write, _LT):
 		length = len(obj_to_write)
 
 		for i in range(length):
